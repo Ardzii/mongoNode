@@ -17,21 +17,22 @@ MongoClient.connect(url, function(err, db) {
 });
 
 var insertDocuments = function(db, callback) {
-  // Get the documents collection
+
   var collection = db.collection('documents');
-  // Insert some documents
+
   collection.insertOne({
-    ticker: kraken.api('Ticker', {"pair": 'XXBTZEUR'})
-                  .then((result) => {
-                    result
-                  })
-                  .catch((error) => {
-                    console.log('Error:', error.message)
-                  }),
-    time: 'today',
+    ticker
   }, function(err, result) {
     assert.equal(err, null);
     console.log("Inserted documents into the collection");
     callback(result);
   });
 }
+
+var ticker = kraken.api('Ticker', {"pair": 'XXBTZEUR'})
+                .then((result) => {
+                  result
+                })
+                .catch((error) => {
+                  console.log('Error:', error.message)
+                });
