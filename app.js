@@ -1,38 +1,60 @@
-var MongoClient = require('mongodb').MongoClient
-  , assert = require('assert');
+// External Modules
+var request = require('request');
+var yargs = require('yargs');
+var _ = require('underscore');
+var async = require('async');
+var MongoClient = require('mongodb').MongoClient,
+  co = require('co'),
+  assert = require('assert');
 
-const KrakenClient = require('@warren-bank/node-kraken-api')
-const kraken = new KrakenClient('api_key', 'api_secret', {timeout: 10000})
+// Own Modules
 
+// Variables
+var tickerArr= []
 
-var url = 'mongodb://localhost:27017/mongoTuto';
+// Generator function for connection
+co(function*() {
+  // Connection URL
+  var url = 'mongodb://localhost:27017/CryptoDB';
+  // Use connect method to connect to the Server
+  var db = yield MongoClient.connect(url);
 
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected to the server.");
-  insertDocuments(db, function() {
-      db.close();
+  // Inside the DB connection
+  console.log('Connection up and running...');
+
+  // Getting the list of the tickers for USD and EUR exclusively
+  request({
+    url:'https://api.kraken.com/0/public/AssetPairs',
+    json: true
+  }, (error, response, body) => {
+    var jsonObject = body;
+    _.map(jsonObject, function(content) {
+      _.map(content, function(data) {
+        if(data.altname.indexOf('EUR') !== -1 || data.altname.indexOf('USD') !== -1)
+          tickerArr.push(data.altname);
+      });
+    });
+    // Getting the ticker info for each USD && EUR ticker available
+    async.forEach(tickerArr, (item) => {
+      request({
+        url:`https://api.kraken.com/0/public/Ticker?pair=${item}`,
+        json: true
+      }, (error, response, body) => {
+              db.collection('Assets').insertOne(
+                body.result,
+                request({
+                      url:'https://api.kraken.com/0/public/Time',
+                      json: true
+                    }, (error, response, body) => {
+                        return body.result;
+                    })
+                  );
+              console.log('Asset Added!', body.result);
+      });
+    });
   });
-
+  // Closing the DB connection
+  // db.close();
+  }).catch(function(err) {
+  console.log(err.stack);
 });
-
-var insertDocuments = function(db, callback) {
-
-  var collection = db.collection('documents');
-
-  collection.insertOne({
-    ticker
-  }, function(err, result) {
-    assert.equal(err, null);
-    console.log("Inserted documents into the collection");
-    callback(result);
-  });
-}
-
-var ticker = kraken.api('Ticker', {"pair": 'XXBTZEUR'})
-                .then((result) => {
-                  result
-                })
-                .catch((error) => {
-                  console.log('Error:', error.message)
-                });
