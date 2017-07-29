@@ -2,52 +2,24 @@
 var MongoClient = require('mongodb').MongoClient,
   co = require('co'),
   assert = require('assert');
+var fs = require('fs');
 
 // Own Modules
-const getTickerList = require('./modules/getTickerList').getTickerList;
-const getTickerInfo = require('./modules/getTickerInfo');
+var getTickerInfo = require('./modules/getTickerInfo').getTickerInfo;
+var unixTimeStamp = require('./modules/getTickerInfo').unixTimeStamp;
+
 
 // Generator function for connection
 co(function*() {
-  // Connection URL
+  // URL
   var url = 'mongodb://localhost:27017/CryptoDB';
-  // Use connect method to connect to the Server
+  // Connect to the Server
   var db = yield MongoClient.connect(url);
 
   // Inside the DB connection
-  console.log('Connection up and running...');
-
-  async function exec() {
-    var tickerList = await getTickerList;
-    var tickerInfo = await getTickerInfo;
-    // var serverTime = await getServerTime;
-    console.log(tickerList);
-    console.log(tickerInfo);
-    // console.log(serverTime);
-  }
-
-  exec()
+  console.log('[SUCCESS]: Connection up and running...');
 
 
-  //   // Getting the ticker info for each USD && EUR ticker available
-  //   async.forEach(tickerArr, (item) => {
-  //     request({
-  //       url:`https://api.kraken.com/0/public/Ticker?pair=${item}`,
-  //       json: true
-  //     }, (error, response, body) => {
-  //             db.collection('Assets').insertOne(
-  //               body.result,
-  //               request({
-  //                     url:'https://api.kraken.com/0/public/Time',
-  //                     json: true
-  //                   }, (error, response, body) => {
-  //                       return body.result;
-  //                   })
-  //                 );
-  //             console.log('Asset Added!', body.result);
-  //     });
-  //   });
-  // });
   // Closing the DB connection
   // db.close();
   }).catch(function(err) {

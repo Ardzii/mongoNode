@@ -1,24 +1,19 @@
-var request = require('request');
 var _ = require('underscore');
 
-var getTickerList = new Promise((resolve, reject) => {
-  var tickerArr = [];
-  request({
-    url: 'https://api.kraken.com/0/public/AssetPairs',
-    json: true
-  }, (error, response, body) => {
+var getFromApi = require('./getFromApi').getFromApi;
 
-    var jsonObject = body;
-    _.map(jsonObject, function(content) {
-      _.map(content, function(data) {
-        if (data.altname.indexOf('EUR') !== -1 || data.altname.indexOf('USD') !== -1)
-          tickerArr.push(data.altname);
-          // resolve(tickerArr = [1, 2, 3, 4, 5, 6]);
-      });
-    });
-    resolve(tickerArr);
-  })
-});
+function getTickerList() {
+  getFromApi('AssetPairs').then((res) => {
+      var tickerArr = [];
+      // I need to edit the info recieved as not everything is usefull
+      _.map(res, function(content) {
+        if (content.altname.indexOf('EUR') !== -1 && content.altname.indexOf('.d') === -1 || content.altname.indexOf('USD') !== -1 && content.altname.indexOf('.d') === -1)
+          tickerArr.push(content.altname);
+        });
+  }).catch((err) => {
+    console.log('Something went wrong: ', err);
+  });
+}
 
 module.exports = {
   getTickerList,
