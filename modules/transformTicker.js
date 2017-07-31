@@ -16,27 +16,10 @@ function transformTicker(ticker) {
         h: ticker.result[k].h,
         o: ticker.result[k].o,
       }
-      console.log(result);
+      return result;
     });
   });
 }
-
-transformTicker({
-  error: [],
-  result: {
-    XXBTZEUR: {
-      a: [1, 2, 3],
-      b: [1, 2, 3],
-      c: [1, 2, 3],
-      v: [1, 2, 3],
-      p: [1, 2, 3],
-      t: [1, 2, 3],
-      l: [1, 2, 3],
-      h: [1, 2, 3],
-      o: 34,
-    }
-  }
-});
 
 module.exports = {
   transformTicker,

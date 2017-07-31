@@ -6,7 +6,7 @@ var fs = require('fs');
 
 // Own Modules
 var getTickerInfo = require('./modules/getTickerInfo').getTickerInfo;
-var unixTimeStamp = require('./modules/getTickerInfo').unixTimeStamp;
+var getTickerList = require('./modules/getTickerList').getTickerList;
 
 
 // Generator function for connection
@@ -19,6 +19,18 @@ co(function*() {
   // Inside the DB connection
   console.log('[SUCCESS]: Connection up and running...');
 
+  async function worker() {
+      var tickerList = await getTickerList();
+      var tickerInfo = await getTickerInfo(tickerList);
+      var filename = `./modules/batches/${new Date().toISOString()}batch.json`;
+
+      fs.writeFile(filename, JSON.stringify(tickerInfo), (err) => {
+          if (err) throw err;
+          console.log("Done");
+      });
+  }
+
+  worker();
 
   // Closing the DB connection
   // db.close();

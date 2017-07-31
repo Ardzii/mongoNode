@@ -1,10 +1,9 @@
-const getFromApi = require('./getFromApi');
+const getFromApi = require('./getFromApi').getFromApi;
+const transformTicker = require('./transformTicker');
 
 function getSingleTicker(tick) {
-    return getFromApi('Ticker', {pair: 'XXBTZEUR'}).then((data) => {
-      console.log('This is the data', data);
-  }).catch((err) => {
-      console.log('[Failed]: ', err);
+    getFromApi('Ticker', {pair: tick}).then(transformTicker).catch((error) => {
+      console.log('[FAILED]: ', error);
   });
 }
 

@@ -9,11 +9,12 @@ function getFromApi(request, params) {
       if (data.error.length) {
         throw new Error(`There was a problem: `, data.error[0]);
       } else {
+        console.log('[SUCCESS]: Connected to the API...');
         return data.result;
         // console.log(data.result); //Just to check everything works properly.
       }
-    }).catch((err) => {
-      console.log('[Failed]: ', err);
+    }).catch((error) => {
+      console.log('[FAILED]: ', error);
     });
 }
 
