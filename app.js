@@ -21,11 +21,6 @@ co(function*() {
 
   async function worker() {
       var tickerList = await getTickerList();
-      if (tickerList) {
-        console.log('[SUCCESS]: Exporting the list...');
-      } else {
-        console.log('[FAILED]: Something went wrong with the list.');
-      }
       var tickerInfo = await getTickerInfo(tickerList);
       var filename = `./modules/batches/${new Date().toISOString()}batch.json`;
 

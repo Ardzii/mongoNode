@@ -5,7 +5,6 @@ var _ = require('underscore');
 var getFromApi = require('./getTickerList').getTickerList;
 
 function transformList(res) {
-  console.log(res);
   var tickerArr = [];
   _.map(res, function(content) {
     if (content.altname.indexOf('EUR') !== -1 && content.altname.indexOf('.d') === -1 || content.altname.indexOf('USD') !== -1 && content.altname.indexOf('.d') === -1)
@@ -13,3 +12,7 @@ function transformList(res) {
     });
   return tickerArr;
 };
+
+module.exports = {
+  transformList,
+}

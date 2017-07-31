@@ -3,7 +3,7 @@ var _ = require('underscore');
 
 // Own Modules
 var getFromApi = require('./getFromApi').getFromApi;
-var transformList = require('./transformList');
+var transformList = require('./transformList').transformList;
 
 function getTickerList() {
   // var tickerArr = [];
