@@ -9,10 +9,12 @@ function getFromApi(request, params) {
     }).then((data) => {
       if (data.error.length) {
         throw new Error(`There was a problem: `, data.error[0]);
-      } else {
-        console.log('[SUCCESS]: Connected to the API...');
+      } else if (data.result) {
+        // console.log('[SUCCESS]: Connected to the API...');
         return data.result;
         // console.log(data.result); //Just to check everything works properly.
+      } else {
+        console.log('[PENDING]: Retrying connection - Probably timed-out!');
       }
     }).catch((error) => {
       console.log('[FAILED]: ', error);

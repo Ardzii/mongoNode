@@ -26,7 +26,7 @@ co(function*() {
 
       fs.writeFile(filename, JSON.stringify(tickerInfo), (err) => {
           if (err) throw err;
-          console.log("Done");
+          console.log("[SUCCESS]: All tickers processed successfully!");
       });
   }
 

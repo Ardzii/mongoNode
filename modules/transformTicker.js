@@ -18,15 +18,13 @@ function transformTicker(ticker) {
         h: ticker[k].h,
         o: ticker[k].o,
       }
-      console.log(`[ADDED]: ${k}`);
+      console.log(`[ADDED]: ${JSON.stringify(result)}`);
       return result;
     // });
   });
 }
 
 // transformTicker({
-//   error: [ ],
-//   result: {
 //     XETHZEUR: {
 //       a: ["164.40000","6","6.000"],
 //       b: ["164.40000","14","14.000"],
@@ -38,7 +36,6 @@ function transformTicker(ticker) {
 //       h: ["171.46256","176.29917"],
 //       o: "168.00000"
 //     }
-//   }
 // });
 
 module.exports = {
