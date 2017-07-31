@@ -1,3 +1,4 @@
+// Own Modules
 var getSingleTicker = require('./getSingleTicker').getSingleTicker;
 
 function transformTicker(ticker) {

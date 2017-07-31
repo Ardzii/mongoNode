@@ -1,3 +1,4 @@
+// Own Modules
 const getFromApi = require('./getFromApi').getFromApi;
 const transformTicker = require('./transformTicker');
 
