@@ -8,4 +8,6 @@ function getServerTime() {
   });
 }
 
-getServerTime();
+module.exports = {
+  getServerTime,
+}

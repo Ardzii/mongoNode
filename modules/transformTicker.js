@@ -1,8 +1,11 @@
 // Own Modules
 var getSingleTicker = require('./getSingleTicker').getSingleTicker;
+var getServerTime = require('./getServerTime').getServerTime;
 
-function transformTicker(ticker) {
+async function transformTicker(ticker) {
   var result = {};
+  var timeStamp = {};
+  var timeStamp = await getServerTime();
   Object.keys(ticker).forEach((k) => {
       result= {
         name: k,
@@ -15,6 +18,7 @@ function transformTicker(ticker) {
         l: ticker[k].l,
         h: ticker[k].h,
         o: ticker[k].o,
+        n: timeStamp,
       }
       console.log(`[ADDED]: ${JSON.stringify(k)}`);
     // });
@@ -25,7 +29,7 @@ function transformTicker(ticker) {
 module.exports = {
   transformTicker,
 }
-// <pair_name> = pair name
+//     name = pair name
 //     a = ask array(<price>, <whole lot volume>, <lot volume>),
 //     b = bid array(<price>, <whole lot volume>, <lot volume>),
 //     c = last trade closed array(<price>, <lot volume>),
@@ -35,3 +39,4 @@ module.exports = {
 //     l = low array(<today>, <last 24 hours>),
 //     h = high array(<today>, <last 24 hours>),
 //     o = today's opening price
+//     n = time on the server at the moment of extraction
