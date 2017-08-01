@@ -21,9 +21,6 @@ function getFromApi(request, params) {
     });
 }
 
-// getFromApi('Ticker', {pair: 'XXBTZEUR'}) // For test
-
-
 module.exports = {
   getFromApi,
 }

@@ -11,32 +11,6 @@ var getSingleTicker = require('./getSingleTicker').getSingleTicker;
     }
   }
 
-// getTickerInfo([ 'DASHEUR',
-//   'DASHUSD',
-//   'EOSEUR',
-//   'EOSUSD',
-//   'GNOEUR',
-//   'GNOUSD',
-//   'USDTUSD',
-//   'ETCEUR',
-//   'ETCUSD',
-//   'ETHEUR',
-//   'ETHUSD',
-//   'LTCEUR',
-//   'LTCUSD',
-//   'REPEUR',
-//   'REPUSD',
-//   'XBTEUR',
-//   'XBTUSD',
-//   'XLMEUR',
-//   'XLMUSD',
-//   'XMREUR',
-//   'XMRUSD',
-//   'XRPEUR',
-//   'XRPUSD',
-//   'ZECEUR',
-//   'ZECUSD' ]);
-
 module.exports = {
   getTickerInfo,
 }

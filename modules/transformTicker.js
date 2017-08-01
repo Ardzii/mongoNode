@@ -4,8 +4,6 @@ var getSingleTicker = require('./getSingleTicker').getSingleTicker;
 function transformTicker(ticker) {
   var result = {};
   Object.keys(ticker).forEach((k) => {
-    // Object.keys(ticker[pair]).forEach((k) => {
-      // console.log(k);
       result= {
         name: k,
         a: ticker[k].a,
@@ -18,25 +16,11 @@ function transformTicker(ticker) {
         h: ticker[k].h,
         o: ticker[k].o,
       }
-      console.log(`[ADDED]: ${JSON.stringify(result)}`);
-      return result;
+      console.log(`[ADDED]: ${JSON.stringify(k)}`);
     // });
   });
+  return result;
 }
-
-// transformTicker({
-//     XETHZEUR: {
-//       a: ["164.40000","6","6.000"],
-//       b: ["164.40000","14","14.000"],
-//       c: ["165.50000","14.45821873"],
-//       v: ["70.59286717","44595.67696673"],
-//       p: ["169.34955","169.27608"],
-//       t: [64,13978],
-//       l: ["165.49377","163.10000"],
-//       h: ["171.46256","176.29917"],
-//       o: "168.00000"
-//     }
-// });
 
 module.exports = {
   transformTicker,
