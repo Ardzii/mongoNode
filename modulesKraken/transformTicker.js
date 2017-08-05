@@ -1,11 +1,9 @@
 // Own Modules
 var getSingleTicker = require('./getSingleTicker').getSingleTicker;
-var getServerTime = require('./getServerTime').getServerTime;
 
-async function transformTicker(ticker) {
+function transformTicker(ticker) {
   var result = {};
-  var timeStamp = {};
-  var timeStamp = await getServerTime();
+  var timeStamp = Math.floor(new Date());
   Object.keys(ticker).forEach((k) => {
       result= {
         name: k,
@@ -21,7 +19,6 @@ async function transformTicker(ticker) {
         n: timeStamp,
       }
       console.log(`[ADDED]: ${JSON.stringify(k)}`);
-    // });
   });
   return result;
 }

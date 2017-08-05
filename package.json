@@ -6,16 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ardzii",
   "license": "ISC",
   "dependencies": {
-    "@warren-bank/node-kraken-api": "^3.0.0",
     "async": "^2.5.0",
-    "kraken-api": "^0.1.7",
     "mongodb": "^2.2.30",
-    "mongoose": "^4.11.4",
     "request-promise": "^4.2.1",
     "underscore": "^1.8.3",
-    "yargs": "^8.0.2"
   }
 }

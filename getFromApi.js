@@ -1,9 +1,11 @@
 // External Modules
 var rp = require('request-promise');
 
-function getFromApi(request, params) {
-  return rp({
-      url: `https://api.kraken.com/0/public/${request}`,
+function getFromApi(mod, request, params) {
+  if (mod === 'kraken') {
+    var uri = `https://api.kraken.com/0/public/${request}`;
+    return rp({
+      url: uri,
       qs: params,
       json: true,
     }).then((data) => {
@@ -19,7 +21,20 @@ function getFromApi(request, params) {
     }).catch((error) => {
       console.log('[FAILED]: ', error);
     });
+  } else if (mod === 'bitstamp') {
+    var uri = `https://www.bitstamp.net/api/v2/${request}/${params}`;
+    return rp({
+        url: uri,
+        json: true,
+      }).then((data) => {
+        return data;
+      }).catch((error) => {
+        console.log('[FAILED]: ', error);
+      });
+  }
 }
+
+// getFromApi('bitstamp', 'ticker', 'btceur')
 
 module.exports = {
   getFromApi,
