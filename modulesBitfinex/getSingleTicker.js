@@ -18,7 +18,7 @@ function getSingleTicker(tick) {
                 h: ticker.high,
                 n: ticker.timestamp,
           }
-          console.log(`[ADDED]: ${tick}`); // **** There's a bug there related with the previous forEach.
+          // **** There's a bug there related with the previous forEach.
           // I know what's the problem but not sure how to fix it. Basically the Object.keys command returns an array
           // of the keys within the object and then I do for each key a reordering: Meanning a console.log() for each keys
           // That's obviously not what I want but I'm afraid to break the loop by modifying it and besides the console.log()
@@ -27,7 +27,7 @@ function getSingleTicker(tick) {
         return result;
       })
       .catch((error) => {
-        console.log('[FAILED]: ', error);
+        console.log('[FAILED][BITFINEX]: ', error);
   });
 }
 

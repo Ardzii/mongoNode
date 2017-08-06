@@ -5,7 +5,7 @@ const transformTicker = require('./transformTicker').transformTicker;
 function getSingleTicker(tick) {
  return getFromApi('kraken','Ticker', {pair: tick})
       .then(transformTicker).catch((error) => {
-console.log('[FAILED]: ', error);
+console.log('[FAILED][KRAKEN]: ', error);
   });
 }
 

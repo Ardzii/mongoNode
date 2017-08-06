@@ -18,7 +18,6 @@ function transformTicker(ticker) {
         o: ticker[k].o,
         n: timeStamp,
       }
-      console.log(`[ADDED]: ${JSON.stringify(k)}`);
   });
   return result;
 }

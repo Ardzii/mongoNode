@@ -6,7 +6,7 @@ function getTickerList() {
   return getFromApi('kraken','AssetPairs')
     .then(transformList)
     .catch((error) => {
-    console.log('Something went wrong: ', error);
+    console.log('[KRAKEN] Something went wrong: ', error);
   });
 }
 
