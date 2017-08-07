@@ -1,6 +1,15 @@
 // External Modules
 var rp = require('request-promise');
 
+// **** SETTING COUNTER AND VARIABLE FOR EACH API TO KEEP WITHIN THE ACCEPTED NUMBER OF REQUESTS ***
+var countBitfinex = 0;
+
+setInterval(function(){
+    countBitfinex = 0;
+}, 9000);
+
+// **** START OF THE FUNCTION GETFROMAPI *****
+
 function getFromApi(mod, request, params) {
 
 // *** KRAKEN API REQUEST ***
@@ -15,9 +24,7 @@ function getFromApi(mod, request, params) {
       if (data.error.length) {
         throw new Error(`There was a problem: `, data.error[0]);
       } else if (data.result) {
-        // console.log('[SUCCESS]: Connected to the API...');
         return data.result;
-        // console.log(data.result); //Just to check everything works properly.
       } else {
         console.log('[PENDING]: Retrying connection - Probably timed-out!');
       }
@@ -41,23 +48,28 @@ function getFromApi(mod, request, params) {
 // *** BITFINEX API REQUEST ***
 
   } else if (mod = 'bitfinex') {
-    if (params) {
-      var uri = `https://api.bitfinex.com/v1/${request}/${params}`
-    } else {
-      var uri = `https://api.bitfinex.com/v1/${request}`
-    }
+      if (params) {
+        var uri = `https://api.bitfinex.com/v1/${request}/${params}`
+      } else {
+        var uri = `https://api.bitfinex.com/v1/${request}`
+      }
       return rp({
         url: uri,
         json: true,
       }).then((data) => {
-        return data;
+       if (countBitfinex <= 5) {
+          countBitfinex++;
+          console.log(countBitfinex);
+          return data;
+        } else if (countBitfinex > 5) {
+          console.log('[PROC STOPPED]');
+          return countBitfinex;
+        }
       }).catch((error) => {
         console.log('[FAILED]: ', error);
       });
   }
 }
-
-// getFromApi('bitfinex', 'pubticker', 'btcusd');
 
 module.exports = {
   getFromApi,
